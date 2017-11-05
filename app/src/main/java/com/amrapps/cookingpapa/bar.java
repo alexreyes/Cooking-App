@@ -3,6 +3,7 @@ package com.amrapps.cookingpapa;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -25,9 +26,19 @@ public class bar extends AppCompatActivity {
         SeekBar sk = findViewById(R.id.seek);
         String initialVal = getIntent().getStringExtra("slider_value");
 
+        if (initialVal == null) {
+            initialVal = "1";
+        }
         // initializes slider value based on passed values. Currently it only takes a hard coded value
         // should add support to remember value
-        int x = Integer.parseInt(initialVal) - 1;
+        // Added in try catch because it crashes if it doesn't go to the main activity for the slider val first.
+        int x = 0;
+        try {
+            x = Integer.parseInt(initialVal) - 1;
+        }
+        catch (Exception e) {
+            Log.d("Bar", "Tried to read the empty difficulty variable");
+        }
         sk.setProgress(x);
         tv.setText(initialVal);
         levelToString(initialVal);

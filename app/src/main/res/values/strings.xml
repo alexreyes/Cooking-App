@@ -4,4 +4,6 @@
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_recipe_desc">RecipeDesc</string>
     <string name="title_activity_recipe">activity_recipe</string>
+    <string name="title_activity_intro">IntroActivity</string>
+    <string name="title_activity_settings">Settings</string>
 </resources>
