@@ -9,4 +9,8 @@
     tools:context="com.amrapps.cookingpapa.RecipeDesc"
     tools:showIn="@layout/activity_recipe_desc">
 
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        />
 </android.support.constraint.ConstraintLayout>
