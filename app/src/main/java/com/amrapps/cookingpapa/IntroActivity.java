@@ -18,7 +18,7 @@ public class IntroActivity extends AppIntro {
 
         // Add your slide fragments here.
         // AppIntro will automatically generate the dots indicator and buttons.
-        addSlide(AppIntroFragment.newInstance("Welcome to Cooking Papa", "The most innovative cooking app ever built. Made for the 21st century.", R.drawable.icon_food, Color.parseColor("#3F51B5")));
+        addSlide(AppIntroFragment.newInstance("Welcome to Cooking Papa", "'The most innovative cooking app ever built. Made for the 22nd century.' - Steve Jobs", R.drawable.icon_food, Color.parseColor("#3F51B5")));
         addSlide(AppIntroFragment.newInstance("Love Cooking?", "Our app provides for endless recipes curated just for you.", R.drawable.dinnerplate, Color.parseColor("#43a047")));
         addSlide(AppIntroFragment.newInstance("New to Cooking?", "That's fine too. We can help you work your way up to making that gourmet dish you've always dreamed of.", R.drawable.dome, Color.parseColor("#f4511e")));
 
