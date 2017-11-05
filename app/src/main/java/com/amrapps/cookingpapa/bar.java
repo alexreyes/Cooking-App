@@ -8,16 +8,16 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.SeekBar;
 
-public class Difficulty extends AppCompatActivity {
+public class bar extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         SeekBar sk = (SeekBar) findViewById(R.id.seek);
+        System.out.println(sk);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
