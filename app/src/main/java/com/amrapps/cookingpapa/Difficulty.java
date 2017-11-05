@@ -15,6 +15,7 @@ public class Difficulty extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_difficulty);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        "{p"
         setSupportActionBar(toolbar);
 
         SeekBar sk = (SeekBar) findViewById(R.id.seek);
