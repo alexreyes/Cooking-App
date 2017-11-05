@@ -29,6 +29,7 @@ import java.util.List;
 public class RecipeDesc extends AppCompatActivity {
 
     private ListView ingredientList;
+    public ArrayList<String> badIngredients;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class RecipeDesc extends AppCompatActivity {
         final TextView theTitle = findViewById(R.id.title);
         final ImageView theImage = findViewById(R.id.image);
         ingredientList = findViewById(R.id.ingredientsList);
-        //final TextView theDesc = findViewById(R.id.description);
+        badIngredients = new ArrayList<>();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -120,6 +121,13 @@ public class RecipeDesc extends AppCompatActivity {
     }
 
     public void ingredientAction(View v){
+
+        RelativeLayout vwParentRow = (RelativeLayout) v.getParent();
+        TextView placeHolder = (TextView) vwParentRow.getChildAt(0);
+        String holder2 = placeHolder.getText().toString();
+        badIngredients.add(holder2);
+        System.out.println(badIngredients);
+
 
 
     }
