@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
-        final Intent intent = new Intent(this, RecipeDesc.class);
+        final Intent intent = new Intent(this, bar.class);
 
         activityRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,12 +67,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onClick(View view){
-        System.out.println("Line 1");
-        Intent intent = new Intent(this, bar.class);
-        startActivity(intent);
-        System.out.println("Line 2");
-    }
 
     public void showData(DataSnapshot dataSnapshot){
         ArrayList<recipeInfo> RecipeThings = new ArrayList<>();
