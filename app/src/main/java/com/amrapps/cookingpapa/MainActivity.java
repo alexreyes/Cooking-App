@@ -1,15 +1,14 @@
 package com.amrapps.cookingpapa;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private String holder;
     private String slider_value = "1";
+    SharedPreferences prefs = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +37,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
-        Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
-        final Intent intent = new Intent(this, bar.class);
+        final Intent intent = new Intent(this, IntroActivity.class);
 
         // decides if it is safe to try to pull slider value from intent or if its null
         boolean safe = false;
@@ -53,12 +52,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("slider_value", slider_value);
 
         // on click of difficulty button
-        activityRecipe.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(intent);
-            }
-        });
 
         mRef = mFirebaseDatabase.getReference("Recipes");
         mRef.addValueEventListener(new ValueEventListener() {
@@ -78,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
 
         mListView = (ListView) findViewById(R.id.recipeList);
 
+        prefs = getSharedPreferences("com.amrapps.cookingpapa", MODE_PRIVATE);
+
     }
 
 
@@ -91,8 +86,15 @@ public class MainActivity extends AppCompatActivity {
             DataSnapshot item = items.next();
             recipe.setRecipeName(item.child("name").getValue(String.class));
 
-            // filters out recipie items based on difficulty value
-            int x = Integer.parseInt(slider_value);
+            // Added in try catch because it crashes if it doesn't go to the main activity for the slider val first.
+            int x = 1;
+            // filters out recipe items based on difficulty value
+            try {
+                x = Integer.parseInt(slider_value);
+            }
+            catch (Exception e) {
+                Log.d("MainActivity", "Tried to get the recipe difficulty value but couldn't");
+            }
             if (item.child("Difficulty").getValue(Integer.class) <= x) {
                 RecipeThings.add(recipe);
             }
@@ -119,4 +121,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (prefs.getBoolean("firstrun", true)) {
+            // Do first run stuff here then set 'firstrun' as false
+            // using the following line to edit/commit prefs
+            prefs.edit().putBoolean("firstrun", false).commit();
+
+            Intent i = new Intent(this, IntroActivity.class);
+            startActivity(i);
+
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent i = new Intent(this, Settings.class);
+            startActivity(i);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

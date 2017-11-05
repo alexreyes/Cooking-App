@@ -52,7 +52,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        android:text="Recipie Difficulty"
+        android:text="Select your cooking skill level"
         android:textAppearance="@style/TextAppearance.AppCompat.Display2"
         android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
