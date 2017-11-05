@@ -16,30 +16,31 @@
             android:layout_height="wrap_content">
 
             <TextView
+                android:id="@+id/title"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Delicious Hawaiian Pizza"
                 android:gravity="center"
                 android:textColor="#000000"
-                android:textSize="30dp"
-                android:id="@+id/textView"/>
+                android:textSize="30dp"/>
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/image"
                 android:layout_width="wrap_content"
                 android:layout_height="191dp"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView"
+                android:layout_below="@+id/title"
                 android:src="@drawable/pizza"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp"/>
 
             <TextView
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:padding="20dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/imageView"
+                android:layout_below="@+id/image"
                 android:text="Dissolve the sugar, yeast, and salt in the lukewarm water (and olive oil, if you're using it).
         Add the flour and Pizza Dough Flavor, starting with 5 1/2 cups flour and adding more as necessary to make a soft, smooth dough.
         Knead the dough (with your hands, a mixer, or your bread machine set on the dough cycle) until it's smooth and elastic, about 7 to 10 minutes.
