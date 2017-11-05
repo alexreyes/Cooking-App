@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
-    private String holder;
+    public String holder;
     private String slider_value = "1";
     SharedPreferences prefs = null;
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         boolean safe = false;
         String test = getIntent().getStringExtra("slider_value");
         safe = test != null;
-        // if safe, pullls data, otherwise uses the default value
+        // if safe, pulls data, otherwise uses the default value
         if (safe) {
             slider_value = getIntent().getStringExtra("slider_value");
         }
