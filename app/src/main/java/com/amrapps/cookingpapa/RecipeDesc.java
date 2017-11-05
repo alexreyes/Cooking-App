@@ -24,6 +24,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import static java.lang.Integer.parseInt;
+
 public class RecipeDesc extends AppCompatActivity {
 
     private ListView ingredientList;
@@ -33,6 +35,8 @@ public class RecipeDesc extends AppCompatActivity {
     private String holder;
     private Boolean checker;
     private Boolean localChecker;
+    private int diff;
+    private TextView foodDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,18 +44,20 @@ public class RecipeDesc extends AppCompatActivity {
         setContentView(R.layout.activity_recipe);
         checker = false;
         badIngredients = new ArrayList<>();
+        diff = parseInt(getIntent().getStringExtra("slider_value"));
 
         onCreateRunner();
     }
 
     public void onCreateRunner(){
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Recipes");
         mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         final TextView theTitle = findViewById(R.id.title);
         final ImageView theImage = findViewById(R.id.image);
+        foodDesc = findViewById(R.id.description);
         ingredientList = findViewById(R.id.ingredientsList);
         localChecker = false;
 
@@ -73,7 +79,7 @@ public class RecipeDesc extends AppCompatActivity {
 
                 showData(dataSnapshot);
 
-
+                foodDesc.setText(dataSnapshot.child(holder).child("description").getValue(String.class));
                 String imageURL = dataSnapshot.child(holder).child("img").getValue(String.class);
 
                 theImage.setImageDrawable(LoadImageFromWebOperations(imageURL));
@@ -158,7 +164,11 @@ public class RecipeDesc extends AppCompatActivity {
                                 DataSnapshot itemTwo = itemsTwo.next();
                                 System.out.println("_--____-_-_-___-__-"+ itemTwo.getValue());
                                 for(int i =0; i<badIngredients.size(); i++){
-                                    if(badIngredients.get(i).toString().equals(itemTwo.getValue(String.class))){
+
+                                    if (badIngredients.get(i).toString().equals(itemTwo.getValue(String.class))) {
+                                        localChecker = true;
+                                    }
+                                    if (item.child("Difficulty").getValue(Integer.class) > diff) {
                                         localChecker = true;
                                     }
                                 }
