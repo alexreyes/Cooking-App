@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
         final Intent intent = new Intent(this, bar.class);
+        intent.putExtra("slider_value", "3");
 
         activityRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
