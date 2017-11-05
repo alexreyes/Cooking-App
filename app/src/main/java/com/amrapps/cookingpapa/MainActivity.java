@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
         final Intent intent = new Intent(this, bar.class);
+        intent.putExtra("slider_value", "3");
+        intent.putExtra("first_time",true);
 
         activityRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,6 +66,10 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mListView = (ListView) findViewById(R.id.recipeList);
+        boolean firstRun = getIntent().getBooleanExtra("first_time", false);
+        if (firstRun){
+            startActivity(intent);
+        }
 
     }
 

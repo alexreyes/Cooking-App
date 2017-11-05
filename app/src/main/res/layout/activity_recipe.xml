@@ -30,7 +30,6 @@
                 android:layout_height="191dp"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/title"
-                android:src="@drawable/pizza"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="43dp" />
 
