@@ -9,6 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
-    public String holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,11 +87,15 @@ public class MainActivity extends AppCompatActivity {
         mRef = mFirebaseDatabase.getReference();
 
         RelativeLayout vwParentRow = (RelativeLayout) v.getParent();
-        System.out.println("-----" + vwParentRow.getChildAt(0));
-        holder = vwParentRow.getChildAt(0).toString();
 
-        Intent i = new Intent(MainActivity.this, RecipeDesc.class);
-        startActivity(i);
+        TextView placeHolder = (TextView) vwParentRow.getChildAt(0);
+        System.out.println("_________" + placeHolder.getText().toString());
+        String holder = placeHolder.getText().toString();
+
+        Intent intent = new Intent(getBaseContext(), RecipeDesc.class);
+        intent.putExtra("Holder", holder);
+        startActivity(intent);
+
     }
 
 }

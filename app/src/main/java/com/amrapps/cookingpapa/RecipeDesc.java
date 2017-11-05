@@ -38,9 +38,6 @@ public class RecipeDesc extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String title = dataSnapshot.child("Cookies").child("name").getValue(String.class);
-                theTitle.setText(title);
-
                 String image = dataSnapshot.child("Cookies").child("img").getValue(String.class);
 
                 String desc = dataSnapshot.child("Cookies").child("3").getValue(String.class);
@@ -48,16 +45,21 @@ public class RecipeDesc extends AppCompatActivity {
 
                 ArrayList<String> RecipeThings = new ArrayList<>();
 
-                Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+
+                String holder = getIntent().getStringExtra("Holder");
+
+                Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
                 RecipeThings.clear();
                 while(items.hasNext()){
                     DataSnapshot item = items.next();
-                    String recipe = item.child("name").getValue(String.class);
+                    String recipe = item.getValue(String.class);
 
                     RecipeThings.add(recipe);
                 }
                 theTitle.setText(items + "");
                 Log.d("RecipeThings", RecipeThings + "");
+
+                theTitle.setText(holder);
             }
 
             @Override
