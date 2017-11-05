@@ -70,6 +70,7 @@ public class bar extends AppCompatActivity {
     public void clicked(View view){
         Intent value_of_slider = new Intent(getBaseContext(), MainActivity.class);
         value_of_slider.putExtra("slider_value", tv.getText());
+        value_of_slider.putExtra("first_time",false);
         System.out.println("This is yoour value: " + value_of_slider.getStringExtra("slider_value"));
         startActivity(value_of_slider);
     }
