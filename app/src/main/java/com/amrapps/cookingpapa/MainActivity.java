@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
 
             // filters out recipie items based on difficulty value
             int x = Integer.parseInt(slider_value);
-            if (item.child("Difficulty").getValue(Integer.class) >= x) {
+            if (item.child("Difficulty").getValue(Integer.class) <= x) {
                 RecipeThings.add(recipe);
             }
         }
@@ -114,6 +114,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intent = new Intent(getBaseContext(), RecipeDesc.class);
         intent.putExtra("Holder", holder);
+        intent.putExtra("slider_value", slider_value);
         startActivity(intent);
 
     }
