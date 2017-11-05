@@ -16,32 +16,38 @@ public class bar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar);
+
+        // instatiates both labels
         tv = (TextView) findViewById(R.id.bar_reading);
         ln = (TextView) findViewById(R.id.level_name);
 
+        // to access the slider bar values
         SeekBar sk = findViewById(R.id.seek);
-
-//        System.out.println(sk);
-//        System.out.println((getIntent().getStringExtra("slider_value")));
         String initialVal = getIntent().getStringExtra("slider_value");
-        sk.setProgress(Integer.parseInt(initialVal));
+
+        // initializes slider value based on passed values. Currently it only takes a hard coded value
+        // should add support to remember value
+        int x = Integer.parseInt(initialVal) - 1;
+        sk.setProgress(x);
         tv.setText(initialVal);
         levelToString(initialVal);
 
+        // actions that happen when the slider bar is changed
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                System.out.println(seekBar.getProgress());
 
+                // weird work around so that I can use the values from .getProgress(). definteyl a btter way
                 int x = seekBar.getProgress();
                 String[] vals = {"1","2","3","4","5"};
                 String line = "none";
                 for (int a = 0; a < vals.length; a++){
-                    System.out.println(a);
                     if (Double.parseDouble(vals[a]) - 1 == x){
                         line = vals[a];
                     }
                 }
+
+                // updates the number and the description based upon setting
                 tv.setText(line);
                 levelToString(line);
 
@@ -61,21 +67,19 @@ public class bar extends AppCompatActivity {
 
     }
 
+    // sumbit button action handler. returns to main activity
+    // should pass back slider postition
     public void clicked(View view){
         Intent value_of_slider = new Intent(getBaseContext(), MainActivity.class);
         value_of_slider.putExtra("slider_value", tv.getText());
-        value_of_slider.putExtra("first_time",false);
-        System.out.println("This is your value: " + value_of_slider.getStringExtra("slider_value"));
+        startActivity(value_of_slider);
     }
 
-    public void value_changed(View view){
-        System.out.println("value changed!");
-    }
+    // utitly function. pairs level to a description
+    private void levelToString(String level) {
 
-    public void levelToString(String level) {
-
-        String[] level_to_name = {"Wow, you can make eggs?! (sarcasm)", "ew, gross",
-                "I guess I'd eat that", "African kids would love this!", "I think I just came."};
+        String[] level_to_name = {"Cereal. That's it.", "Eggs",
+                "Stir-Fry", "Steak", "The Nectar of the Gods"};
 
         for (int a = 0; a < level_to_name.length; a++) {
             if (a + 1 == Double.parseDouble(level)) {
