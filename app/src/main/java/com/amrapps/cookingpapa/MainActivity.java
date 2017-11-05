@@ -1,6 +1,7 @@
 package com.amrapps.cookingpapa;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -28,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
-    private String holder;
+    public String holder;
     private String slider_value = "1";
 
     @Override
@@ -44,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         boolean safe = false;
         String test = getIntent().getStringExtra("slider_value");
         safe = test != null;
-        // if safe, pullls data, otherwise uses the default value
+        // if safe, pulls data, otherwise uses the default value
         if (safe) {
             slider_value = getIntent().getStringExtra("slider_value");
         }

@@ -7,9 +7,9 @@
         android:id="@+id/ingredientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/selectIngredient"
+        android:layout_alignBottom="@+id/selectIngredient"
         android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_toStartOf="@+id/selectRecipe"
         android:text="TextView" />
 
     <Button
@@ -19,6 +19,6 @@
         android:onClick="ingredientAction"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
-        android:text="Button" />
+        android:text="Don't Have" />
 
 </RelativeLayout>
