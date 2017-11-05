@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
+    private String slider_value = "1";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +38,20 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
         final Intent intent = new Intent(this, bar.class);
-        intent.putExtra("slider_value", "3");
 
+        // decides if it is safe to try to pull slider value from intent or if its null
+        boolean safe = false;
+        String test = getIntent().getStringExtra("slider_value");
+        safe = test != null;
+        // if safe, pullls data, otherwise uses the default value
+        if (safe) {
+            slider_value = getIntent().getStringExtra("slider_value");
+        }
+
+        // updates the slider value
+        intent.putExtra("slider_value", slider_value);
+
+        // on click of difficulty button
         activityRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,8 +66,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("hey", "This: "+dataSnapshot.getValue());
                 if (dataSnapshot.exists()){
                     showData(dataSnapshot);
-                } else {
-
                 }
             }
 
@@ -79,7 +90,11 @@ public class MainActivity extends AppCompatActivity {
             DataSnapshot item = items.next();
             recipe.setRecipeName(item.child("name").getValue(String.class));
 
-            RecipeThings.add(recipe);
+            // filters out recipie items based on difficulty value
+            int x = Integer.parseInt(slider_value);
+            if (item.child("Difficulty").getValue(Integer.class) >= x) {
+                RecipeThings.add(recipe);
+            }
         }
         Log.d("he", "Hello Here" + RecipeThings.size());
         ArrayAdapter adapter = new customListAdapter(this, RecipeThings);
