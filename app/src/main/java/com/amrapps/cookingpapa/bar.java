@@ -14,12 +14,14 @@ import android.content.Intent;
 public class bar extends AppCompatActivity {
 
     private TextView tv;
+    private TextView ln;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar);
         tv = (TextView) findViewById(R.id.bar_reading);
+        ln = (TextView) findViewById(R.id.level_name);
         SeekBar sk = findViewById(R.id.seek);
         System.out.println(sk);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -30,7 +32,7 @@ public class bar extends AppCompatActivity {
 
 
                 int x = seekBar.getProgress();
-                String[] vals = {"1","2","3","4","5","6","7","8","9","10"};
+                String[] vals = {"1","2","3","4","5"};
                 String line = "none";
                 for (int a = 0; a < vals.length; a++){
                     System.out.println(a);
@@ -39,6 +41,15 @@ public class bar extends AppCompatActivity {
                     }
                 }
                 tv.setText(line);
+
+                String[] level_to_name = {"Wow, you can make eggs?! (sarcasm)","ew, gross",
+                        "I guess I'd eat that","African kids would love this!","I think I just came."};
+                for (int a = 0; a < level_to_name.length; a++){
+                    if (a + 1 == Double.parseDouble(line)){
+                        ln.setText(level_to_name[a]);
+                    }
+                }
+
 
             }
 
