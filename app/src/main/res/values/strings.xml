@@ -3,4 +3,5 @@
     <string name="title_activity_difficulty">Difficulty</string>
     <string name="title_activity_recipes">Recipes</string>
     <string name="title_activity_recipe_desc">RecipeDesc</string>
+    <string name="title_activity_recipe">activity_recipe</string>
 </resources>

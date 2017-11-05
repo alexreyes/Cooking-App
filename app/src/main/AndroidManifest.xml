@@ -17,10 +17,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Difficulty"
-            android:label="@string/title_activity_difficulty"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity
             android:name=".RecipeDesc"
             android:label="@string/title_activity_recipe_desc"
             android:theme="@style/AppTheme.NoActionBar"></activity>
