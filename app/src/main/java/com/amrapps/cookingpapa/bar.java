@@ -89,8 +89,8 @@ public class bar extends AppCompatActivity {
     // utitly function. pairs level to a description
     private void levelToString(String level) {
 
-        String[] level_to_name = {"Cereal. That's it.", "Eggs",
-                "Stir-Fry", "Steak", "The Nectar of the Gods"};
+        String[] level_to_name = {"Cereal. That's it.", "I can make Eggs.",
+                "Stir-Fry.", "Steak.", "Move over Gordon Ramsay!"};
 
         for (int a = 0; a < level_to_name.length; a++) {
             if (a + 1 == Double.parseDouble(level)) {
