@@ -21,8 +21,8 @@ public class bar extends AppCompatActivity {
 
         SeekBar sk = findViewById(R.id.seek);
 
-//        System.out.println(sk);
-//        System.out.println((getIntent().getStringExtra("slider_value")));
+//      System.out.println(sk);
+//      System.out.println((getIntent().getStringExtra("slider_value")));
         String initialVal = getIntent().getStringExtra("slider_value");
         sk.setProgress(Integer.parseInt(initialVal));
         tv.setText(initialVal);
@@ -31,13 +31,11 @@ public class bar extends AppCompatActivity {
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-                System.out.println(seekBar.getProgress());
 
                 int x = seekBar.getProgress();
                 String[] vals = {"1","2","3","4","5"};
                 String line = "none";
                 for (int a = 0; a < vals.length; a++){
-                    System.out.println(a);
                     if (Double.parseDouble(vals[a]) - 1 == x){
                         line = vals[a];
                     }
@@ -64,12 +62,7 @@ public class bar extends AppCompatActivity {
     public void clicked(View view){
         Intent value_of_slider = new Intent(getBaseContext(), MainActivity.class);
         value_of_slider.putExtra("slider_value", tv.getText());
-        System.out.println("This is your value: " + value_of_slider.getStringExtra("slider_value"));
         startActivity(value_of_slider);
-    }
-
-    public void value_changed(View view){
-        System.out.println("value changed!");
     }
 
     public void levelToString(String level) {

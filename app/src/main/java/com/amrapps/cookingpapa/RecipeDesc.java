@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,14 +43,14 @@ public class RecipeDesc extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String imageURL = dataSnapshot.child("Cookies").child("img").getValue(String.class);
-                Toast.makeText(getApplicationContext(), imageURL, Toast.LENGTH_SHORT).show();
-                Log.d("url", imageURL);
-                theImage.setImageDrawable(LoadImageFromWebOperations(imageURL));
 
                 ArrayList<String> RecipeThings = new ArrayList<>();
 
                 String holder = getIntent().getStringExtra("Holder");
+
+                String imageURL = dataSnapshot.child(holder).child("img").getValue(String.class);
+
+                theImage.setImageDrawable(LoadImageFromWebOperations(imageURL));
 
                 Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
                 RecipeThings.clear();
