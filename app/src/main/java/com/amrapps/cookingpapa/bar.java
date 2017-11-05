@@ -1,15 +1,11 @@
 package com.amrapps.cookingpapa;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.Button;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import android.content.Intent;
 
 public class bar extends AppCompatActivity {
 
@@ -26,8 +22,6 @@ public class bar extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
                 System.out.println(seekBar.getProgress());
-
-
 
                 int x = seekBar.getProgress();
                 String[] vals = {"1","2","3","4","5","6","7","8","9","10"};
@@ -59,7 +53,7 @@ public class bar extends AppCompatActivity {
     public void clicked(View view){
         Intent value_of_slider = new Intent(getBaseContext(), MainActivity.class);
         value_of_slider.putExtra("slider_value", tv.getText());
-        System.out.println("This is yoour value: " + value_of_slider.getStringExtra("slider_value"));
+        System.out.println("This is your value: " + value_of_slider.getStringExtra("slider_value"));
         startActivity(value_of_slider);
     }
 
