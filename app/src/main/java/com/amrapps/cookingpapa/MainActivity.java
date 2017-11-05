@@ -8,6 +8,8 @@ import android.widget.Button;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -23,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
+    public String holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +81,18 @@ public class MainActivity extends AppCompatActivity {
         ArrayAdapter adapter = new customListAdapter(this, RecipeThings);
         mListView.setAdapter(adapter);
 
+    }
+
+    public void goToIndividualRecipe(View v){
+
+        mRef = mFirebaseDatabase.getReference();
+
+        RelativeLayout vwParentRow = (RelativeLayout) v.getParent();
+        System.out.println("-----" + vwParentRow.getChildAt(0));
+        holder = vwParentRow.getChildAt(0).toString();
+
+        Intent i = new Intent(MainActivity.this, RecipeDesc.class);
+        startActivity(i);
     }
 
 }
