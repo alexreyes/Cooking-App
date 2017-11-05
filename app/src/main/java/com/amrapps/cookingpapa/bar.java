@@ -13,10 +13,10 @@ public class bar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_difficulty);
+        setContentView(R.layout.activity_bar);
 
+        SeekBar sk = findViewById(R.id.seek);
 
-        SeekBar sk = (SeekBar) findViewById(R.id.seek);
         System.out.println(sk);
         sk.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
