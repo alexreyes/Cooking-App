@@ -10,6 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,13 +21,15 @@ import java.util.Iterator;
 public class MainActivity extends AppCompatActivity {
 
     private ListView mListView;
-
+    private DatabaseReference mRef;
+    private FirebaseDatabase mFirebaseDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
         Button activityRecipe = (Button) findViewById(R.id.activityRecipe);
         final Intent intent = new Intent(this, RecipeDesc.class);
 
@@ -31,6 +37,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(intent);
+            }
+        });
+
+        mRef = mFirebaseDatabase.getReference("Recipes");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("hey", "This: "+dataSnapshot.getValue());
+                if (dataSnapshot.exists()){
+                    showData(dataSnapshot);
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
 
@@ -46,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         while(items.hasNext()){
             recipeInfo recipe = new recipeInfo();
             DataSnapshot item = items.next();
-            recipe.setRecipeName(item.child("Name").getValue(String.class));
+            recipe.setRecipeName(item.child("name").getValue(String.class));
 
             RecipeThings.add(recipe);
         }
