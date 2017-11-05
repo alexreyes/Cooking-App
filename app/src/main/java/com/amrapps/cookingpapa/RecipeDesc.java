@@ -1,6 +1,5 @@
 package com.amrapps.cookingpapa;
 
-import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -24,7 +23,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 public class RecipeDesc extends AppCompatActivity {
 
@@ -54,20 +52,15 @@ public class RecipeDesc extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-                String image = dataSnapshot.child("Cookies").child("img").getValue(String.class);
-
-                //String desc = dataSnapshot.child("Cookies").child("3").getValue(String.class);
-                //theDesc.setText(desc);
-                String imageURL = dataSnapshot.child("Cookies").child("img").getValue(String.class);
-                Toast.makeText(getApplicationContext(), imageURL, Toast.LENGTH_SHORT).show();
-                Log.d("url", imageURL);
-                theImage.setImageDrawable(LoadImageFromWebOperations(imageURL));
-
                 ArrayList<String> RecipeThings = new ArrayList<>();
 
                 String holder = getIntent().getStringExtra("Holder");
                 showData(dataSnapshot, holder);
 
+
+                String imageURL = dataSnapshot.child(holder).child("img").getValue(String.class);
+
+                theImage.setImageDrawable(LoadImageFromWebOperations(imageURL));
 
                 Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
                 RecipeThings.clear();
