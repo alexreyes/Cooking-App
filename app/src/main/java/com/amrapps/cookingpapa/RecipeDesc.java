@@ -5,8 +5,13 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,6 +26,9 @@ import java.util.Iterator;
 
 public class RecipeDesc extends AppCompatActivity {
 
+    private ListView ingredientList;
+    public ArrayList<String> badIngredients;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +39,8 @@ public class RecipeDesc extends AppCompatActivity {
 
         final TextView theTitle = findViewById(R.id.title);
         final ImageView theImage = findViewById(R.id.image);
-        final TextView theDesc = findViewById(R.id.description);
+        ingredientList = findViewById(R.id.ingredientsList);
+        badIngredients = new ArrayList<>();
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -43,10 +52,11 @@ public class RecipeDesc extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
                 // whenever data at this location is updated.
-
                 ArrayList<String> RecipeThings = new ArrayList<>();
 
                 String holder = getIntent().getStringExtra("Holder");
+                showData(dataSnapshot, holder);
+
 
                 String imageURL = dataSnapshot.child(holder).child("img").getValue(String.class);
 
@@ -56,7 +66,7 @@ public class RecipeDesc extends AppCompatActivity {
                 RecipeThings.clear();
                 while(items.hasNext()){
                     DataSnapshot item = items.next();
-                    String recipe = item.getValue(String.class);
+                    String recipe = item.toString();
 
                     RecipeThings.add(recipe);
                 }
@@ -83,6 +93,36 @@ public class RecipeDesc extends AppCompatActivity {
             Log.d("Exception", "" + e);
             return null;
         }
+    }
+
+    public void showData(DataSnapshot dataSnapshot, String holder){
+        ArrayList<indiIngredients> IngredientThings = new ArrayList<>();
+
+        Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
+        IngredientThings.clear();
+        while(items.hasNext()){
+            indiIngredients ingredient = new indiIngredients();
+            DataSnapshot item = items.next();
+            ingredient.setIngredientName(item.getValue(String.class));
+
+            IngredientThings.add(ingredient);
+        }
+        Log.d("he", "Hello Here" + IngredientThings.size());
+        ArrayAdapter adapter = new customListAdapterIngredients(this, IngredientThings);
+        ingredientList.setAdapter(adapter);
+
+    }
+
+    public void ingredientAction(View v){
+
+        RelativeLayout vwParentRow = (RelativeLayout) v.getParent();
+        TextView placeHolder = (TextView) vwParentRow.getChildAt(0);
+        String holder2 = placeHolder.getText().toString();
+        badIngredients.add(holder2);
+        System.out.println(badIngredients);
+
+
+
     }
 
 }

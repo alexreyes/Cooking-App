@@ -63,6 +63,9 @@ public class bar extends AppCompatActivity {
         Intent value_of_slider = new Intent(getBaseContext(), MainActivity.class);
         value_of_slider.putExtra("slider_value", tv.getText());
         startActivity(value_of_slider);
+
+
+        value_of_slider.putExtra("first_time",false);
     }
 
     public void levelToString(String level) {
