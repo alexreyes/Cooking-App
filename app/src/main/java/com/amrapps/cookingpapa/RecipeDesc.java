@@ -30,19 +30,32 @@ public class RecipeDesc extends AppCompatActivity {
 
     private ListView ingredientList;
     public ArrayList<String> badIngredients;
+    private DatabaseReference mRef;
+    private FirebaseDatabase mFirebaseDatabase;
+    private String holder;
+    private Boolean checker;
+    private Boolean localChecker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        checker = false;
+        badIngredients = new ArrayList<>();
+
+        onCreateRunner();
+    }
+
+    public void onCreateRunner(){
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("Recipes");
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
 
         final TextView theTitle = findViewById(R.id.title);
         final ImageView theImage = findViewById(R.id.image);
         ingredientList = findViewById(R.id.ingredientsList);
-        badIngredients = new ArrayList<>();
+        localChecker = false;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
 
@@ -65,8 +78,11 @@ public class RecipeDesc extends AppCompatActivity {
 
                 ArrayList<String> RecipeThings = new ArrayList<>();
 
-                String holder = getIntent().getStringExtra("Holder");
-                showData(dataSnapshot, holder);
+                if(checker == false) {
+                    holder = getIntent().getStringExtra("Holder");
+                }
+
+                showData(dataSnapshot);
 
 
                 Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
@@ -89,7 +105,9 @@ public class RecipeDesc extends AppCompatActivity {
                 Log.w("RecipeDesc", "Failed to read value.", error.toException());
             }
         });
+
     }
+
     public static Drawable LoadImageFromWebOperations(String url) {
         try {
             Log.d("loadImage", "inside loadImage method");
@@ -102,7 +120,7 @@ public class RecipeDesc extends AppCompatActivity {
         }
     }
 
-    public void showData(DataSnapshot dataSnapshot, String holder){
+    public void showData(DataSnapshot dataSnapshot){
         ArrayList<indiIngredients> IngredientThings = new ArrayList<>();
 
         Iterator<DataSnapshot> items = dataSnapshot.child(holder).child("Ingredients").getChildren().iterator();
@@ -114,7 +132,6 @@ public class RecipeDesc extends AppCompatActivity {
 
             IngredientThings.add(ingredient);
         }
-        Log.d("he", "Hello Here" + IngredientThings.size());
         ArrayAdapter adapter = new customListAdapterIngredients(this, IngredientThings);
         ingredientList.setAdapter(adapter);
 
@@ -129,6 +146,55 @@ public class RecipeDesc extends AppCompatActivity {
         System.out.println(badIngredients);
 
 
+        mRef = mFirebaseDatabase.getReference("Recipes");
+        mRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Log.d("hey", "This: "+dataSnapshot.getValue());
+                if (dataSnapshot.exists()){
+
+                    Iterator<DataSnapshot> items = dataSnapshot.getChildren().iterator();
+                    while(items.hasNext()){
+                        localChecker = false;
+                        recipeInfo recipe = new recipeInfo();
+                        DataSnapshot item = items.next();
+                        if(!item.child("name").getValue(String.class).equals(holder)){
+
+                            Iterator<DataSnapshot> itemsTwo = item.child("Ingredients").getChildren().iterator();
+                            while(itemsTwo.hasNext()){
+                                DataSnapshot itemTwo = itemsTwo.next();
+                                System.out.println("_--____-_-_-___-__-"+ itemTwo.getValue());
+                                for(int i =0; i<badIngredients.size(); i++){
+                                    if(badIngredients.get(i).toString().equals(itemTwo.getValue(String.class))){
+                                        localChecker = true;
+                                    }
+                                }
+
+                            }
+
+                            if(localChecker == false){
+                                holder = item.child("name").getValue(String.class);
+                                checker = true;
+                                localChecker = false;
+                                break;
+                            } else {
+
+                            }
+
+
+                        }
+                    }
+                    onCreateRunner();
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 

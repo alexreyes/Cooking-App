@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private DatabaseReference mRef;
     private FirebaseDatabase mFirebaseDatabase;
+    private String holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
             RecipeThings.add(recipe);
         }
-        Log.d("he", "Hello Here" + RecipeThings.size());
         ArrayAdapter adapter = new customListAdapter(this, RecipeThings);
         mListView.setAdapter(adapter);
 
@@ -100,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView placeHolder = (TextView) vwParentRow.getChildAt(0);
         System.out.println("_________" + placeHolder.getText().toString());
-        String holder = placeHolder.getText().toString();
+        holder = placeHolder.getText().toString();
 
         Intent intent = new Intent(getBaseContext(), RecipeDesc.class);
         intent.putExtra("Holder", holder);
